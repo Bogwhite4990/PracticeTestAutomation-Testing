@@ -1,48 +1,53 @@
-describe("Exemplu unde", () => {
-    // it("Verific daca un URL contine ceva", () => {
-    //     cy.visit('https://www.digi24.ro/stiri/externe/ue/pasa-mercedes-a-fost-retinut-de-autoritatile-ucrainene-episcopul-acuzat-de-legaturi-cu-moscova-2302037');
+describe('Testing PracticeTestAutomation', () => {
+
+    // Testing with a user that is wrong
+    it('Do not have access to page because of the username', () => {
+        cy.visit('https://practicetestautomation.com/practice-test-login/');
+        cy.get('#username').type('admin');
+        cy.get('#password').type('Password123');
+        cy.get('#submit').click();
         
-    //     cy.url().should('include', '/stiri/') // verifica un segment
-    // })
+        // See if username error msg exist
+        cy.contains('Your username is invalid!').should('exist');
+    })
 
-    // Test cu delay
-    // it('asteapta 10 secunde', () => {
-    //     cy.visit('https://google.com');
-        
-    //     cy.get('#L2AGLb').click();
+    // Testing with a password that is wrong
+    it('Do not have access to page because of the username', () => {
+        cy.visit('https://practicetestautomation.com/practice-test-login/');
+        cy.get('#username').type('student');
+        cy.get('#password').type('Password12344');
+        cy.get('#submit').click();
 
-    //     cy.wait(10000); // 10 secunde
+        // See if password error msg exist
+        cy.contains('Your password is invalid!').should('exist');
+    })
 
-    //     cy.get('.gLFyf').type('Au trecut 10 secunde')
-    // })
+    // Testing if we can access the page with the correct username and password
+    it('Do have access to page', () => {
+        cy.visit('https://practicetestautomation.com/practice-test-login/');
+        cy.get('#username').type('student');
+        cy.get('#password').type('Password123');
+        cy.get('#submit').click();
 
-    // it('selecteaza folosind un atribut', () => {
-    //     cy.visit('https://google.com');
+        // See if the 'Log out' button exist
+        cy.get('.wp-block-button__link').should('exist');
+    })
 
-    //     cy.get('#L2AGLb').click();
+    // Testing if we can use the Log out button
+    it('Log out button works', () => {
+        cy.visit('https://practicetestautomation.com/practice-test-login/');
+        cy.get('#username').type('student');
+        cy.get('#password').type('Password123');
+        cy.get('#submit').click();
 
-    //     cy.get('[alt="Google').should('be.visible'); //Selector atribut alt + assertion cu visible
-    // })
+        // Click on Log out button
+        cy.get('.wp-block-button__link').click();
 
-    // it('fac un screenshot la pagina', () => {
-    //     cy.visit('https://google.com');
+        // Check if the Log out button works
+        cy.contains('Test login').should('exist');
 
-    //     cy.screenshot(); // Face screenshot intr-un folder default
-    // })
 
-    // it('verific o valoare din input', () => {
-    //     cy.visit('https://google.com');
-        
-    //     cy.get('#L2AGLb').click();
-    //     const googleSearch = cy.get('.gLFyf'); // constanta
+    })
 
-    //     googleSearch.type('123');
-    //     googleSearch.should('have.value', '123'); // Asertion contine textul
-    // })
 
-    // it('verific o valoare din input', () => {
-    //     cy.visit('https://libris.ro/');
-
-    //     cy.get('#autoCompleteButton').should('have.class', 'onSearchClick');
-    // })
 })
